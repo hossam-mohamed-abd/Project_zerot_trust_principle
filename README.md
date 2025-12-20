@@ -36,7 +36,7 @@ and correct system design.
 ---
 
 ### Phase 1 – Database & Tables
-**Assigned To:** Team Member 1  
+**Assigned To:** shahenda  
 **Objective:** Create the database and all required tables.
 
 **Tasks:**
@@ -55,7 +55,7 @@ and correct system design.
 ---
 
 ### Phase 2 – Roles Creation
-**Assigned To:** Team Member 2  
+**Assigned To:** ahmed goda  
 **Objective:** Define system roles.
 
 **Tasks:**
@@ -76,7 +76,7 @@ and correct system design.
 ---
 
 ### Phase 3 – Views (Security Layer)
-**Assigned To:** Team Member 3  
+**Assigned To:** abdalrahman ayman
 **Objective:** Create secure views for data access.
 
 **Tasks:**
@@ -93,7 +93,7 @@ and correct system design.
 ---
 
 ### Phase 4 – Permissions (Access Control)
-**Assigned To:** Team Member 4  
+**Assigned To:** abdalrahman
 **Objective:** Link roles with permissions safely.
 
 **Tasks:**
