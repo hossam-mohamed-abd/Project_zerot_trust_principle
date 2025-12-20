@@ -1,151 +1,113 @@
 # National University Information System (NUIS)
-## SQL Server Project – Team Guide & Development Plan
+## SQL Server Team Project – Complete Development Guide
 
 ---
 
-## 1. Project Overview
+## 1. Project Introduction
 
-This project aims to build a **secure National University Information System (NUIS)** using
-**Microsoft SQL Server only**.
+This project implements a **National University Information System (NUIS)** using **Microsoft SQL Server only**.
 
-The system is designed to solve critical problems found in traditional university systems,
-such as:
+The purpose of the system is to solve major security and data management problems found in traditional
+university systems, such as:
 - Data leakage between faculties
-- Unauthorized access to student records
+- Unauthorized access to student information
 - Silent modification of grades
-- Lack of auditing and accountability
+- Lack of accountability and auditing
 
-The project focuses on **database security, role-based access control, and auditing**.
-No frontend or backend application is required.
+The project focuses entirely on **database design, security, access control, and auditing**.
+No frontend, backend, or application code is required.
 
 ---
 
 ## 2. Project Scope
 
-### Included
-- Database creation
-- Tables design
-- Roles and permissions
-- Secure views
-- Auditing using triggers
-- SQL Server implementation only
+### What This Project Includes
+- Creating a SQL Server database
+- Designing database tables
+- Creating roles for different users
+- Controlling access using permissions
+- Using views as a security layer
+- Auditing grade changes using triggers
 
-### Not Included
-- Frontend UI
-- Backend API
+### What This Project Does NOT Include
 - Web or desktop applications
+- User interfaces
+- APIs or backend logic
 
 ---
 
 ## 3. Team Information
 
 - Team Size: 6 Members
-- Skill Level: Beginner in SQL
-- Development Style: Step-by-step, role-based teamwork
-- Leadership Model: One leader responsible for naming, review, and integration
+- SQL Level: Beginner
+- Project Type: Database-only
+- Development Method: Step-by-step phases
+- Leadership Model: One leader controls naming, review, and final integration
 
 ---
 
-## 4. Technology Stack
+## 4. Technology Used
 
 - Database Engine: Microsoft SQL Server
 - Language: SQL
-- Development Type: Database-only project
+- Environment: Local SQL Server instance
 
 ---
 
-## 5. Project Structure
+## 5. Core Project Idea
 
-All project files must follow this structure exactly:
+The system must guarantee that:
+- Every user can access only what they are allowed to
+- Students can see only their own data
+- Instructors can modify grades only for their courses
+- Auditors can see logs but cannot modify data
+- Even the DBA cannot change grades without leaving evidence
 
-NUIS_Project/
-│
-├── 01_tables.sql
-├── 02_roles.sql
-├── 03_views.sql
-├── 04_permissions.sql
-├── 05_audit.sql
-└── NUIS_Final.sql
-
-yaml
-Copy code
+If any of these conditions fail, the system is considered rejected.
 
 ---
 
-## 6. Execution Order
+## 6. Mandatory Naming Rules (Strict)
 
-The SQL files must be executed in the following order:
+⚠️ Naming rules are mandatory and cannot be changed without leader approval.
 
-1. 01_tables.sql  
-2. 02_roles.sql  
-3. 03_views.sql  
-4. 04_permissions.sql  
-5. 05_audit.sql  
-
-The final merged file:
-- `NUIS_Final.sql`
-
----
-
-## 7. Mandatory Naming Rules (Strict)
-
-⚠️ These rules are **mandatory**.
-No team member is allowed to change any name without leader approval.
-
----
-
-### 7.1 Database Name
-
+### Database Name
 NUIS
 
-yaml
-Copy code
-
 ---
 
-### 7.2 Tables and Columns
+### Tables and Columns
 
-#### Table: Students
+#### Students
 StudentID
 StudentName
 NationalID
 GPA
 
-yaml
-Copy code
-
----
-
-#### Table: Instructors
+#### Instructors
 InstructorID
 InstructorName
 
-yaml
+shell
 Copy code
 
----
-
-#### Table: Courses
+#### Courses
 CourseID
 CourseName
 InstructorID
 
-yaml
+shell
 Copy code
 
----
-
-#### Table: Enrollments
+#### Enrollments
 StudentID
 CourseID
 Grade
 
-yaml
+shell
 Copy code
 
----
-
-#### Table: GradeAudit
+#### GradeAudit
 AuditID
 StudentID
 CourseID
@@ -158,10 +120,7 @@ Copy code
 
 ---
 
-### 7.3 Roles
-
-Roles must be created exactly with the following names:
-
+### Roles
 StudentRole
 InstructorRole
 AuditorRole
@@ -172,10 +131,7 @@ Copy code
 
 ---
 
-### 7.4 Views
-
-Views must be created exactly with the following names:
-
+### Views
 StudentView
 InstructorView
 
@@ -184,36 +140,41 @@ Copy code
 
 ---
 
-## 8. Development Phases
+## 7. Development Strategy (How the Team Works)
 
-The project is divided into clear phases.
-Each phase has a specific responsibility and output.
+The project is developed in **clear ordered stages**.
+Each stage depends on the previous one.
+
+The correct order is:
+1. Database and tables
+2. Roles creation
+3. Views creation
+4. Permissions assignment
+5. Auditing implementation
+6. Final review and testing
 
 ---
 
-### Phase 0 – Project Setup
+## 8. Development Stages and Responsibilities
+
+### Stage 0 – Project Setup
 **Responsible:** Project Leader
 
-**Tasks:**
-- Prepare project structure
 - Define naming rules
+- Organize the workflow
 - Assign tasks to team members
-- Review and approve all outputs
-
-**Output:**
-- Ready project environment
-- Unified naming standards
+- Review all outputs
+- Approve final result
 
 ---
 
-### Phase 1 – Database & Tables
+### Stage 1 – Database & Tables
 **Responsible:** Team Member 1
 
-**Tasks:**
-- Create database `NUIS`
+- Create the database `NUIS`
 - Create all required tables
 - Define primary keys
-- Keep table design simple and clear
+- Keep structure simple and clear
 
 **Rules:**
 - Tables only
@@ -221,120 +182,95 @@ Each phase has a specific responsibility and output.
 - No permissions
 - No views
 
-**Output File:**
-- `01_tables.sql`
-
 ---
 
-### Phase 2 – Roles Creation
+### Stage 2 – Roles Creation
 **Responsible:** Team Member 2
 
-**Tasks:**
 - Create all system roles
 
 **Rules:**
 - Roles only
-- No GRANT
+- No GRANT statements
 - No access to tables or views
-
-**Output File:**
-- `02_roles.sql`
 
 ---
 
-### Phase 3 – Views (Security Layer)
+### Stage 3 – Views (Security Layer)
 **Responsible:** Team Member 3
 
-**Tasks:**
-- Create secure views
-- Expose only necessary columns
-- Hide sensitive data where possible
+- Create views for students and instructors
+- Expose only allowed columns
+- Hide sensitive data where needed
 
 **Rules:**
 - Views only
 - No permissions
-- No role assignments
-
-**Output File:**
-- `03_views.sql`
+- No roles
 
 ---
 
-### Phase 4 – Permissions (Access Control)
+### Stage 4 – Permissions (Access Control)
 **Responsible:** Team Member 4
 
-**Tasks:**
-- Grant permissions to roles using views only
+- Grant permissions to roles
+- Use views only
 - Revoke any direct table access
-- Apply least privilege principle
 
 **Rules:**
 - No direct permissions on tables
-- GRANT / REVOKE only
-
-**Output File:**
-- `04_permissions.sql`
+- Follow least privilege principle
 
 ---
 
-### Phase 5 – Auditing & Triggers
+### Stage 5 – Auditing & Triggers
 **Responsible:** Team Member 5
 
-**Tasks:**
 - Create audit table
 - Create trigger to log grade changes
-- Ensure no grade update happens without logging
+- Ensure every grade update is recorded
 
 **Rules:**
-- Every grade update must be audited
 - No silent modifications
-
-**Output File:**
-- `05_audit.sql`
+- Auditing is mandatory
 
 ---
 
-## 9. Final Integration
+## 9. Leader Final Responsibilities
 
-**Responsible:** Project Leader
-
-**Tasks:**
-- Review all SQL files
+The project leader must:
+- Review all SQL code
 - Ensure naming consistency
-- Merge all files into one final script
-- Test full execution from start to end
-
-**Final Output:**
-- `NUIS_Final.sql`
+- Ensure correct execution order
+- Test the system from start to end
+- Validate security and auditing behavior
 
 ---
 
 ## 10. Team Rules
 
 - Naming rules are mandatory
-- No direct permissions on tables
-- No individual changes without leader approval
-- Keep SQL simple and beginner-friendly
-- Every file must follow its assigned phase only
+- No one works outside their assigned stage
+- No direct table permissions
+- No individual decisions without leader approval
+- SQL must remain simple and beginner-friendly
 
 ---
 
-## 11. Final Goal (Expected Result)
+## 11. Final Expected Result
 
-The final system must guarantee that:
-
-- Each user can access only their own data
-- No unauthorized data access is possible
-- Grades cannot be modified without being recorded
-- All sensitive operations are fully audited
-- Data integrity and privacy are protected at all times
-
-Failure to meet these goals means the system is rejected.
+The final system must demonstrate that:
+- Data leakage is impossible
+- Unauthorized access is blocked
+- Grade manipulation is fully audited
+- Responsibility and accountability are enforced
+- Database security is correctly implemented
 
 ---
 
 ## 12. Conclusion
 
-This project demonstrates the ability to design a **secure, well-structured, and audited
-database system** using SQL Server, even with beginner-level SQL knowledge, through proper
-planning, teamwork, and strict organization.
+This project demonstrates how a secure and professional database system can be built using SQL Server,
+even by a beginner team, through proper planning, strict organization, and clear responsibility
+distribution.
+
