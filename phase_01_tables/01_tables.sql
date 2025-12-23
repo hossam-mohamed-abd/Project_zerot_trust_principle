@@ -1,3 +1,4 @@
+
 /* ================================
 Phase 1
    ================================ */
@@ -50,6 +51,7 @@ CREATE TABLE dbo.Students (
     CONSTRAINT FK_Students_Users 
         FOREIGN KEY (UserID) REFERENCES dbo.Users(UserID),
     CONSTRAINT FK_Students_Departments 
+         CONSTRAINT hossam mohamed,
         FOREIGN KEY (DepartmentID) REFERENCES dbo.Departments(DepartmentID),
     CONSTRAINT CK_Students_GPA 
         CHECK (GPA BETWEEN 0 AND 4)
