@@ -263,21 +263,27 @@ WHERE i.InstructorName =
 
 ## Trigger (تسجيل تعديل الدرجات)
 ```sql
-CREATE VIEW InstructorStudentsView AS
-SELECT i.InstructorName, s.StudentName, c.CourseName,
-       e.Grade, e.StudentID, e.CourseID
-FROM Instructors i
-JOIN Courses c ON i.InstructorID=c.InstructorID
-JOIN Enrollments e ON c.CourseID=e.CourseID
-JOIN Students s ON e.StudentID=s.StudentID
-WHERE i.InstructorName =
-    CASE SYSTEM_USER
-        WHEN 'login_instructor' THEN 'Dr. Ahmed Ali'
-    END;
+CREATE TRIGGER trg_LogGradeUpdate
+ON Enrollments
+AFTER UPDATE
+AS
+BEGIN
+    INSERT INTO GradeAudit
+    SELECT d.StudentID, d.CourseID,
+           d.Grade, i.Grade,
+           u.UserID, GETDATE()
+    FROM deleted d
+    JOIN inserted i
+    ON d.StudentID=i.StudentID AND d.CourseID=i.CourseID
+    JOIN Users u ON u.Username='inst_ahmed'
+    WHERE d.Grade <> i.Grade;
+END;
 ```
 ###  الشرح
-المدرس يشوف الطلبة بتوعه فقط
+التريجر بيشتغل تلقائي بعد أي تعديل
 
-يقدر يعدل درجاتهم
+deleted = الدرجة القديمة
 
-ميشوفش طلبة مدرس تاني
+inserted = الدرجة الجديدة
+
+بيسجل التغيير في GradeAudit
