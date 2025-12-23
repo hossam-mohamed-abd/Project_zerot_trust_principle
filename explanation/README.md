@@ -160,7 +160,7 @@ DENY SELECT, INSERT, UPDATE, DELETE ON Students TO StudentRole;
 DENY SELECT, INSERT, UPDATE, DELETE ON Enrollments TO InstructorRole;
 ```
 
-## 🔐 Secure Views
+##  Secure Views
 
 ###  StudentGradesView
 
@@ -254,3 +254,4 @@ WHERE StudentID=1 AND CourseID=1;
 ```sql
 SELECT * FROM AuditGradesView;
 ```
+
