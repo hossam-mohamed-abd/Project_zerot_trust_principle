@@ -286,4 +286,55 @@ deleted = الدرجة القديمة
 
 inserted = الدرجة الجديدة
 
-بيسجل التغيير في GradeAudit
+بيسجل التغيير فيGradeAudit
+
+---
+## Testing & Verification
+### StudentRole
+```sql
+SELECT * FROM cGradesView;
+```
+```sql
+SELECT * FROM Students;
+-- RESULT : The SELECT permission was denied on the object 'Students'
+-- BECUSE DENY
+```
+```sql
+UPDATE Enrollments
+SET Grade = 100
+WHERE StudentID = 1 AND CourseID = 1;
+```
+### InstructorRole
+```sql
+SELECT * FROM InstructorStudentsView;
+```
+```sql
+UPDATE InstructorStudentsView
+SET Grade = 90
+WHERE StudentID = 1 AND CourseID = 1;
+```
+```sql
+SELECT * FROM Students;
+--RESULT : The SELECT permission was denied on the object 'Students'
+```
+
+### AuditorRole
+```sql
+SELECT * FROM AuditGradesView;
+```
+```sql
+UPDATE GradeAudit
+SET NewGrade = 100;
+```
+
+### DBA
+```sql
+SELECT * FROM Students;
+SELECT * FROM Enrollments;
+SELECT * FROM GradeAudit;
+```
+
+```sql
+SELECT * FROM GradeAudit;
+```
+
