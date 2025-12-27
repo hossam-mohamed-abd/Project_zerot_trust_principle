@@ -291,6 +291,8 @@ inserted = الدرجة الجديدة
 ---
 ## Testing & Verification
 ### StudentRole
+<img width="636" height="587" alt="image" src="https://github.com/user-attachments/assets/eab3bdf8-6368-4c0b-9bf8-9d00fd07941c" />
+
 ```sql
 SELECT * FROM StudentGradesView;
 ```
@@ -305,6 +307,8 @@ SET Grade = 100
 WHERE StudentID = 1 AND CourseID = 1;
 ```
 ### InstructorRole
+<img width="624" height="330" alt="image" src="https://github.com/user-attachments/assets/bc56a588-948c-43c9-b3be-293f17e6b547" />
+
 ```sql
 SELECT * FROM InstructorStudentsView;
 ```
