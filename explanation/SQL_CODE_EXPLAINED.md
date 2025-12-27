@@ -292,7 +292,7 @@ inserted = الدرجة الجديدة
 ## Testing & Verification
 ### StudentRole
 ```sql
-SELECT * FROM cGradesView;
+SELECT * FROM StudentGradesView;
 ```
 ```sql
 SELECT * FROM Students;
