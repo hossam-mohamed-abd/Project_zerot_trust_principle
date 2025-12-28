@@ -291,8 +291,14 @@ inserted = الدرجة الجديدة
 ---
 ## Testing & Verification
 ### StudentRole
-<img width="636" height="587" alt="image" src="https://github.com/user-attachments/assets/eab3bdf8-6368-4c0b-9bf8-9d00fd07941c" />
+<img width="636" height="587" alt="image" src="https://github.com/user-attachments/assets/eab3bdf8-6368-4c0b-9bf8-9d00fd07941c" 
 
+
+```sql
+
+student_ali
+Student@123
+```
 ```sql
 SELECT * FROM StudentGradesView;
 ```
