@@ -238,6 +238,13 @@ JOIN Users u ON ga.ChangedBy=u.UserID;
 GRANT SELECT ON AuditGradesView TO AuditorRole;
 ```
 
+```sql
+GRANT SELECT ON StudentGradesView TO StudentRole;
+```
+
+```sql
+GRANT UPDATE ON Grades TO InstructorRole;
+```
 ## Testing Scenarios
 ### Student
 ```sql
@@ -254,4 +261,5 @@ WHERE StudentID=1 AND CourseID=1;
 ```sql
 SELECT * FROM AuditGradesView;
 ```
+
 
