@@ -315,6 +315,11 @@ WHERE StudentID = 1 AND CourseID = 1;
 ### InstructorRole
 <img width="624" height="330" alt="image" src="https://github.com/user-attachments/assets/bc56a588-948c-43c9-b3be-293f17e6b547" />
 
+
+```sql
+inst_ahmed
+Password@123
+```
 ```sql
 SELECT * FROM InstructorStudentsView;
 ```
@@ -329,13 +334,15 @@ SELECT * FROM Students;
 ```
 
 ### AuditorRole
+
+```sql
+auditor_1
+Password@123
+```
 ```sql
 SELECT * FROM AuditGradesView;
 ```
-```sql
-UPDATE GradeAudit
-SET NewGrade = 100;
-```
+
 
 ### DBA
 ```sql
