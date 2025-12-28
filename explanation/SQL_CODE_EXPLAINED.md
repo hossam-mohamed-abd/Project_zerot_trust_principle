@@ -220,16 +220,22 @@ DENY SELECT, INSERT, UPDATE, DELETE ON Students TO StudentRole;
 
 ## StudentGradesView
 ```sql
-CREATE VIEW StudentGradesView AS
-SELECT u.Username, s.StudentName, c.CourseName, e.Grade
+CREATE OR ALTER VIEW InstructorStudentsView
+AS
+SELECT
+    i.InstructorName,
+    s.StudentName,
+    c.CourseName,
+    e.Grade,
+    e.StudentID,
+    e.CourseID
 FROM Users u
-JOIN Students s ON u.UserID=s.UserID
-JOIN Enrollments e ON s.StudentID=e.StudentID
-JOIN Courses c ON e.CourseID=c.CourseID
-WHERE u.Username =
-    CASE SYSTEM_USER
-        WHEN 'login_student' THEN 'student_ali'
-    END;
+JOIN Instructors i ON u.UserID = i.UserID
+JOIN Courses c ON i.InstructorID = c.InstructorID
+JOIN Enrollments e ON c.CourseID = e.CourseID
+JOIN Students s ON e.StudentID = s.StudentID
+WHERE u.Username = SUSER_SNAME();
+GO
 ```
 ###  الشرح
 View بتعرض درجات الطالب فقط
@@ -241,21 +247,44 @@ SYSTEM_USER بتعرف مين اللي داخل
 
 ## InstructorStudentsView
 ```sql
-CREATE VIEW InstructorStudentsView AS
-SELECT i.InstructorName, s.StudentName, c.CourseName,
-       e.Grade, e.StudentID, e.CourseID
-FROM Instructors i
-JOIN Courses c ON i.InstructorID=c.InstructorID
-JOIN Enrollments e ON c.CourseID=e.CourseID
-JOIN Students s ON e.StudentID=s.StudentID
-WHERE i.InstructorName =
-    CASE SYSTEM_USER
-        WHEN 'login_instructor' THEN 'Dr. Ahmed Ali'
-    END;
-```
-###  الشرح
-المدرس يشوف الطلبة بتوعه فقط
+CREATE OR ALTER VIEW InstructorStudentsView
+AS
+SELECT
+    i.InstructorName,
+    s.StudentName,
+    c.CourseName,
+    e.Grade,
+    e.StudentID,
+   e.StudentID
+FROM Users u
 
+FROM Users u
+JOIN Instructors i ON u.Use
+JOIN Courses c ON i.InstructorID = c.InstructorID
+JOIN Enrollments e ON c.CourseID = e.CourseID
+JOIN Students s ON e.StudentID = s.StudentID
+WHERE u.Username = SUSER_SNAME();
+HE
+```
+``
+###audit viow
+المدرس يشوف الطلبة بتوعه فقط
+```sql
+CREATE OR ALTER VIEW AuditGradesView
+AS
+SELECT
+    s.StudentName,
+    c.CourseName,
+    ga.OldGrade,
+    ga.NewGrade,
+    u.Username AS ChangedBy,
+    ga.ChangeDate
+FROM GradeAudit ga
+JOIN Students s ON ga.StudentID = s.StudentID
+JOIN Courses c ON ga.CourseID = c.CourseID
+JOIN Users u ON ga.ChangedBy = u.UserID;
+GO
+```
 يقدر يعدل درجاتهم
 
 ميشوفش طلبة مدرس تاني
@@ -263,24 +292,16 @@ WHERE i.InstructorName =
 
 ## Trigger (تسجيل تعديل الدرجات)
 ```sql
-CREATE TRIGGER trg_LogGradeUpdate
-ON Enrollments
-AFTER UPDATE
-AS
-BEGIN
-    INSERT INTO GradeAudit
-    SELECT d.StudentID, d.CourseID,
-           d.Grade, i.Grade,
-           u.UserID, GETDATE()
-    FROM deleted d
-    JOIN inserted i
-    ON d.StudentID=i.StudentID AND d.CourseID=i.CourseID
-    JOIN Users u ON u.Username='inst_ahmed'
-    WHERE d.Grade <> i.Grade;
-END;
+GRANT SELECT, UPDATE ON InstructorStudentsView TO InstructorRole;
+GO
+
+DENY SELECT, INSERT, UPDATE, DELETE ON Enrollments TO InstructorRole;
+DENY SELECT, INSERT, UPDATE, DELETE ON Students TO InstructorRole;
+GO
 ```
 ###  الشرح
 التريجر بيشتغل تلقائي بعد أي تعديل
+ل
 
 deleted = الدرجة القديمة
 
@@ -304,7 +325,7 @@ SELECT * FROM StudentGradesView;
 ```
 ```sql
 SELECT * FROM Students;
--- RESULT : The SELECT permission was denied on the object 'Students'
+-- RESULT : The SELECT permission was denied on the object 'Student
 -- BECUSE DENY
 ```
 ```sql
